@@ -163,7 +163,7 @@ function activate(context) {
                 takeBreak();
             }
             else {
-                vscode.window.showWarningMessage('Please log in to use FitAI features.', 'Login').then((selection) => {
+                vscode.window.showWarningMessage('Please log in to use FitAI features.', 'Login').then(selection => {
                     if (selection === 'Login') {
                         vscode.commands.executeCommand('extension.login');
                     }
@@ -176,7 +176,7 @@ function activate(context) {
         context.subscriptions.push(loginCommand);
         context.subscriptions.push(logoutCommand);
         context.subscriptions.push(takeBreakDisposable);
-        context.subscriptions.push(vscode.workspace.onDidChangeConfiguration((e) => {
+        context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(e => {
             if (e.affectsConfiguration('fitai.timer')) {
                 if (timerInterval && !isOnBreak) {
                     clearInterval(timerInterval);
@@ -211,7 +211,7 @@ function validateNumberInput(input) {
 }
 function startTimer() {
     if (!(0, authService_1.isLoggedIn)()) {
-        vscode.window.showWarningMessage('Please log in to use FitAI features.', 'Login').then((selection) => {
+        vscode.window.showWarningMessage('Please log in to use FitAI features.', 'Login').then(selection => {
             if (selection === 'Login') {
                 vscode.commands.executeCommand('extension.login');
             }

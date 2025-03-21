@@ -1,10 +1,7 @@
 # The following files and directories will be ignored when packaging the extension for distribution
 .vscode
-.vscode/**
-.vscode-test/**
 node_modules
 out
-src/**
 *.ts
 *.test.ts
 *.js.map
@@ -16,13 +13,5 @@ src/**
 *.tar.gz
 README.md
 .eslintrc.json
-**/.eslintrc.json
 tsconfig.json
-**/tsconfig.json
 package.json
-.gitignore
-.yarnrc
-webpack.config.js
-vsc-extension-quickstart.md
-**/*.map
-!out/**
