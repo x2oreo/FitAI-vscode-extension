@@ -23,12 +23,14 @@ export async function initializeAuth(context: vscode.ExtensionContext): Promise<
   
   if (savedEmail && savedPassword) {
     try {
-      await signInWithEmailAndPassword(auth, savedEmail, savedPassword);
+      const userCredential = await signInWithEmailAndPassword(auth, savedEmail, savedPassword);
+      currentUser = userCredential.user; // Ensure currentUser is set immediately
       return true;
     } catch (error) {
       // Stored credentials are invalid, clear them
       await context.globalState.update('userEmail', undefined);
       await context.globalState.update('userPassword', undefined);
+      vscode.window.showWarningMessage('Your saved login has expired. Please log in again.');
     }
   }
   
@@ -39,7 +41,7 @@ export async function initializeAuth(context: vscode.ExtensionContext): Promise<
 export async function showLoginForm(context: vscode.ExtensionContext): Promise<boolean> {
   // Show a multi-step input to get email and password
   const email = await vscode.window.showInputBox({
-    prompt: 'Enter your email addres, if you dont have an account, you can register at the FitAI app',
+    prompt: 'Enter your email addres, if you dont have an account, you can register at the FitAI app.',
     placeHolder: 'email@example.com',
     ignoreFocusOut: true
   });
@@ -61,6 +63,9 @@ export async function showLoginForm(context: vscode.ExtensionContext): Promise<b
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     
+    // Set current user immediately to avoid timing issues
+    currentUser = userCredential.user;
+    
     // Save credentials securely for auto-login
     await context.globalState.update('userEmail', email);
     await context.globalState.update('userPassword', password);
@@ -68,22 +73,24 @@ export async function showLoginForm(context: vscode.ExtensionContext): Promise<b
     vscode.window.showInformationMessage(`Welcome back, ${getUserDisplayName()}!`);
     return true;
   } catch (error) {
-    // If login fails, direct to the FitAI app for registration
-    const errorMessage = (error as Error).message;
-    vscode.window.showErrorMessage(`Login failed: ${errorMessage}`);
+    // Handle various Firebase authentication errors with specific messages
+    const firebaseError = error as any;
+    const errorCode = firebaseError.code || '';
+    const errorMessage = firebaseError.message;
     
-    const action = await vscode.window.showInformationMessage(
-      'To register a new account, please download and use the FitAI app.',
-      'Try Again', 
-      'Get FitAI App'
-    );
-    
-    if (action === 'Try Again') {
-      return showLoginForm(context);
-} else if (action === 'Get FitAI App') {
-      vscode.env.openExternal(vscode.Uri.parse('https://fitai.app')); // Replace with actual app URL
-      return false;
+    if (errorCode === 'auth/invalid-credential' || errorMessage.includes('auth/invalid-credential')) {
+      vscode.window.showErrorMessage('Invalid email or password. Please try again.');
+    } else if (errorCode === 'auth/user-not-found' || errorMessage.includes('auth/user-not-found')) {
+      vscode.window.showErrorMessage('No account found with this email. Please check and try again.');
+    } else if (errorCode === 'auth/too-many-requests' || errorMessage.includes('auth/too-many-requests')) {
+      vscode.window.showErrorMessage('Too many failed login attempts. Please try again later.');
+    } else if (errorCode === 'auth/network-request-failed' || errorMessage.includes('network')) {
+      vscode.window.showErrorMessage('Network error. Please check your connection and try again.');
+    } else {
+      vscode.window.showErrorMessage(`Login failed: ${errorMessage}`);
     }
+    
+    vscode.window.showInformationMessage('To register a new account, please download and use the FitAI app.');
     
     return false;
   }
@@ -101,9 +108,14 @@ export async function logout(context: vscode.ExtensionContext): Promise<void> {
   }
 }
 
-// Listen for auth state changes
+// Listen for auth state changes and make it more robust
 onAuthStateChanged(auth, (user) => {
   currentUser = user;
+  // Log authentication state changes for debugging
+  console.log('Auth state changed:', user ? 'User logged in' : 'User logged out');
+}, (error) => {
+  console.error('Auth state change error:', error);
+  vscode.window.showErrorMessage(`Authentication error: ${error.message}`);
 });
 
 export function getCurrentUser(): User | null {
