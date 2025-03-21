@@ -1,0 +1,17 @@
+# The following files and directories will be ignored when packaging the extension for distribution
+.vscode
+node_modules
+out
+*.ts
+*.test.ts
+*.js.map
+*.js
+*.d.ts
+*.log
+*.tgz
+*.zip
+*.tar.gz
+README.md
+.eslintrc.json
+tsconfig.json
+package.json
