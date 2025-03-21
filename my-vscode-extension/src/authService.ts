@@ -23,12 +23,14 @@ export async function initializeAuth(context: vscode.ExtensionContext): Promise<
   
   if (savedEmail && savedPassword) {
     try {
-      await signInWithEmailAndPassword(auth, savedEmail, savedPassword);
+      const userCredential = await signInWithEmailAndPassword(auth, savedEmail, savedPassword);
+      currentUser = userCredential.user; // Ensure currentUser is set immediately
       return true;
     } catch (error) {
       // Stored credentials are invalid, clear them
       await context.globalState.update('userEmail', undefined);
       await context.globalState.update('userPassword', undefined);
+      vscode.window.showWarningMessage('Your saved login has expired. Please log in again.');
     }
   }
   
@@ -61,6 +63,9 @@ export async function showLoginForm(context: vscode.ExtensionContext): Promise<b
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     
+    // Set current user immediately to avoid timing issues
+    currentUser = userCredential.user;
+    
     // Save credentials securely for auto-login
     await context.globalState.update('userEmail', email);
     await context.globalState.update('userPassword', password);
@@ -68,11 +73,19 @@ export async function showLoginForm(context: vscode.ExtensionContext): Promise<b
     vscode.window.showInformationMessage(`Welcome back, ${getUserDisplayName()}!`);
     return true;
   } catch (error) {
-    // Handle invalid credential errors with a more user-friendly message
-    const errorMessage = (error as Error).message;
+    // Handle various Firebase authentication errors with specific messages
+    const firebaseError = error as any;
+    const errorCode = firebaseError.code || '';
+    const errorMessage = firebaseError.message;
     
-    if (errorMessage.includes('auth/invalid-credential')) {
+    if (errorCode === 'auth/invalid-credential' || errorMessage.includes('auth/invalid-credential')) {
       vscode.window.showErrorMessage('Invalid email or password. Please try again.');
+    } else if (errorCode === 'auth/user-not-found' || errorMessage.includes('auth/user-not-found')) {
+      vscode.window.showErrorMessage('No account found with this email. Please check and try again.');
+    } else if (errorCode === 'auth/too-many-requests' || errorMessage.includes('auth/too-many-requests')) {
+      vscode.window.showErrorMessage('Too many failed login attempts. Please try again later.');
+    } else if (errorCode === 'auth/network-request-failed' || errorMessage.includes('network')) {
+      vscode.window.showErrorMessage('Network error. Please check your connection and try again.');
     } else {
       vscode.window.showErrorMessage(`Login failed: ${errorMessage}`);
     }
@@ -95,9 +108,14 @@ export async function logout(context: vscode.ExtensionContext): Promise<void> {
   }
 }
 
-// Listen for auth state changes
+// Listen for auth state changes and make it more robust
 onAuthStateChanged(auth, (user) => {
   currentUser = user;
+  // Log authentication state changes for debugging
+  console.log('Auth state changed:', user ? 'User logged in' : 'User logged out');
+}, (error) => {
+  console.error('Auth state change error:', error);
+  vscode.window.showErrorMessage(`Authentication error: ${error.message}`);
 });
 
 export function getCurrentUser(): User | null {
