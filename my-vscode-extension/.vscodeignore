@@ -1,7 +1,6 @@
 # The following files and directories will be ignored when packaging the extension for distribution
 .vscode
 node_modules
-out
 *.ts
 *.test.ts
 *.js.map
