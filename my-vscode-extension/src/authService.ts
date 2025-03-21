@@ -3,9 +3,11 @@ import { initializeApp } from 'firebase/app';
 import { 
   getAuth, 
   signInWithEmailAndPassword, 
-    signOut,
+  createUserWithEmailAndPassword, 
+  signOut,
   onAuthStateChanged,
-  User
+  User,
+  updateProfile
 } from 'firebase/auth';
 import { firebaseConfig } from './firebaseConfig';
 
@@ -39,7 +41,7 @@ export async function initializeAuth(context: vscode.ExtensionContext): Promise<
 export async function showLoginForm(context: vscode.ExtensionContext): Promise<boolean> {
   // Show a multi-step input to get email and password
   const email = await vscode.window.showInputBox({
-    prompt: 'Enter your email addres, if you dont have an account, you can register at the FitAI app',
+    prompt: 'Enter your email address',
     placeHolder: 'email@example.com',
     ignoreFocusOut: true
   });
@@ -68,23 +70,71 @@ export async function showLoginForm(context: vscode.ExtensionContext): Promise<b
     vscode.window.showInformationMessage(`Welcome back, ${getUserDisplayName()}!`);
     return true;
   } catch (error) {
-    // If login fails, direct to the FitAI app for registration
+    // If login fails, offer to register
     const errorMessage = (error as Error).message;
     vscode.window.showErrorMessage(`Login failed: ${errorMessage}`);
     
-    const action = await vscode.window.showInformationMessage(
-      'To register a new account, please download and use the FitAI app.',
-      'Try Again', 
-      'Get FitAI App'
-    );
+    const register = await vscode.window.showQuickPick(['Register a new account', 'Try again', 'Cancel'], {
+      placeHolder: 'Account not found. Would you like to register?'
+    });
     
-    if (action === 'Try Again') {
+    if (register === 'Register a new account') {
+      return showRegistrationForm(context);
+    } else if (register === 'Try again') {
       return showLoginForm(context);
-} else if (action === 'Get FitAI App') {
-      vscode.env.openExternal(vscode.Uri.parse('https://fitai.app')); // Replace with actual app URL
-      return false;
     }
     
+    return false;
+  }
+}
+
+export async function showRegistrationForm(context: vscode.ExtensionContext): Promise<boolean> {
+  const email = await vscode.window.showInputBox({
+    prompt: 'Enter your email address to register',
+    placeHolder: 'email@example.com',
+    ignoreFocusOut: true
+  });
+  
+  if (!email) {
+    return false;
+  }
+  
+  const displayName = await vscode.window.showInputBox({
+    prompt: 'What\'s your name?',
+    placeHolder: 'Your name (will be used in notifications)',
+    ignoreFocusOut: true
+  });
+  
+  if (!displayName) {
+    return false;
+  }
+  
+  const password = await vscode.window.showInputBox({
+    prompt: 'Create a password (min 6 characters)',
+    password: true,
+    ignoreFocusOut: true
+  });
+  
+  if (!password) {
+    return false;
+  }
+  
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    
+    // Set the user's display name
+    if (userCredential.user) {
+      await updateProfile(userCredential.user, { displayName });
+    }
+    
+    // Save credentials securely for auto-login
+    await context.globalState.update('userEmail', email);
+    await context.globalState.update('userPassword', password);
+    
+    vscode.window.showInformationMessage(`Account created successfully! Welcome, ${displayName}!`);
+    return true;
+  } catch (error) {
+    vscode.window.showErrorMessage(`Registration failed: ${(error as Error).message}`);
     return false;
   }
 }

@@ -48,17 +48,17 @@
         "fitai.timer.workDuration": {
           "type": "number",
           "default": 25,
-          "description": "Duration of work periods in minutes"
+          "description": "Duration of work periods in seconds"
         },
         "fitai.timer.shortBreakDuration": {
           "type": "number",
           "default": 5,
-          "description": "Duration of short breaks in minutes"
+          "description": "Duration of short breaks in seconds"
         },
         "fitai.timer.longBreakDuration": {
           "type": "number",
-          "default": 15,
-          "description": "Duration of long breaks (after every 4th pomodoro) in minutes"
+          "default": 20,
+          "description": "Duration of long breaks (after every 4th pomodoro) in seconds"
         }
       }
     }
