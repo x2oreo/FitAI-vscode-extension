@@ -1,0 +1,1 @@
+# FitAI-vscode-extension
