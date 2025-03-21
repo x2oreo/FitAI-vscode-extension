@@ -1,46 +1,55 @@
-# My VS Code Extension
+FitAI Pomodoro - Visual Studio Extension
 
-This is a simple VS Code extension that demonstrates how to create and test an extension.
+Introduction
 
-## Features
+Welcome to FitAI Pomodoro, a Visual Studio extension designed to bring balance and wellness to your coding routine. We know how easy it is to get lost in code, skipping breaks, straining your eyes, and neglecting movement. That's where we come in! This extension isn’t just a timer—it’s your companion in maintaining a healthier work-life rhythm.
 
-- A command that can be executed from the command palette.
-- Basic setup for testing the extension.
+At FitAI, we’re on a mission to help developers build long, healthy, and successful careers. With FitAI Pomodoro, you get a structured way to work efficiently, while making sure your mind and body get the care they deserve.
 
-## Installation
+Features
 
-1. Clone the repository:
-   ```
-   git clone https://github.com/yourusername/my-vscode-extension.git
-   ```
+Pomodoro Timer Integration: Work in focused intervals with scheduled breaks to boost productivity and prevent mental fatigue.
 
-2. Navigate to the extension directory:
-   ```
-   cd my-vscode-extension
-   ```
+Smart Break Reminders: Get nudges to stretch, hydrate, and correct your posture—because small habits make a big difference.
 
-3. Install the dependencies:
-   ```
-   npm install
-   ```
+AI-Powered Wellness Insights: Connect with the FitAI ecosystem for personalized fitness and health tips tailored to your coding routine.
 
-## Usage
+Customizable Work Intervals: Adapt the Pomodoro technique to fit your workflow with adjustable session lengths and break times.
 
-1. Open the extension in VS Code.
-2. Press `F5` to run the extension in a new window.
-3. Open the command palette (`Ctrl+Shift+P` or `Cmd+Shift+P` on macOS) and type the command name to execute it.
+Seamless FitAI Ecosystem Integration: Sync with FitAI’s AI-driven coaching to track and improve your health over time.
 
-## Running Tests
+Installation
 
-To run the tests for the extension, use the following command:
-```
-npm test
-```
+Open Visual Studio and navigate to the Extensions menu.
 
-## Contributing
+Search for FitAI Pomodoro in the Visual Studio Marketplace.
 
-Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
+Click Install and restart Visual Studio if prompted.
 
-## License
+Access the extension from the toolbar and configure your session preferences.
 
-This project is licensed under the MIT License.
+Usage
+
+Start a Pomodoro session directly from the Visual Studio toolbar.
+
+Work in deep focus mode while the timer keeps track of your session.
+
+Follow break reminders for simple but effective health-conscious actions.
+
+Stay on top of your well-being with FitAI insights and recommendations.
+
+Why Use FitAI Pomodoro?
+
+Prevents programmer burnout with structured work-break cycles.
+
+Reduces eye strain, RSI, and cognitive fatigue with strategic pauses.
+
+Encourages a healthier lifestyle without disrupting workflow.
+
+Connects with FitAI for a holistic approach to programmer wellness.
+
+Contributing
+
+We love collaboration! If you have ideas, suggestions, or feature requests, feel free to open an issue or contribute via pull requests.
+
+Code smarter, stay healthier, and make your work sessions count with FitAI Pomodoro!
