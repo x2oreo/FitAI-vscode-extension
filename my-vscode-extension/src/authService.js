@@ -67,7 +67,7 @@ function showLoginForm(context) {
     return __awaiter(this, void 0, void 0, function* () {
         // Show a multi-step input to get email and password
         const email = yield vscode.window.showInputBox({
-            prompt: 'Enter your email addres, if you dont have an account, you can register at the FitAI app',
+            prompt: 'Enter your email addres, if you dont have an account, you can register at the FitAI app.',
             placeHolder: 'email@example.com',
             ignoreFocusOut: true
         });
@@ -91,17 +91,15 @@ function showLoginForm(context) {
             return true;
         }
         catch (error) {
-            // If login fails, direct to the FitAI app for registration
+            // Handle invalid credential errors with a more user-friendly message
             const errorMessage = error.message;
-            vscode.window.showErrorMessage(`Login failed: ${errorMessage}`);
-            const action = yield vscode.window.showInformationMessage('To register a new account, please download and use the FitAI app.', 'Try Again', 'Get FitAI App');
-            if (action === 'Try Again') {
-                return showLoginForm(context);
+            if (errorMessage.includes('auth/invalid-credential')) {
+                vscode.window.showErrorMessage('Invalid email or password. Please try again.');
             }
-            else if (action === 'Get FitAI App') {
-                vscode.env.openExternal(vscode.Uri.parse('https://fitai.app')); // Replace with actual app URL
-                return false;
+            else {
+                vscode.window.showErrorMessage(`Login failed: ${errorMessage}`);
             }
+            vscode.window.showInformationMessage('To register a new account, please download and use the FitAI app.');
             return false;
         }
     });
