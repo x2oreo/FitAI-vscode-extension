@@ -1,55 +1,103 @@
-FitAI Pomodoro - Visual Studio Extension
+<p align="center">
+  <img width="256px" src="./docs/logo.png" alt="FitAI Logo" />
+  <h1 align="center">FitAI API</h1>
+  <p align="center">
+    [ <a href="https://github.com/x2oreo/FitAI">FitAI</a> ] · 
+    [ <a href="https://github.com/x2oreo/FitAI-vscode-extension">FitAI API</a> ] ·
+    [ <b><ins>FitAI VS Code Extension</ins></b> ]
+  </p>
+  <p align="center">
+    FitAI is an innovative ecosystem tailored specifically for developers who face challenges balancing health with their demanding coding schedules. Our solution simplifies achieving fitness goals by providing personalized workout and meal plans, AI expert advice and integration in the VSCode ecosystem.
+  </p>
+</p>
 
-Introduction
+<p align="center">
+    <a href="https://github.com/x2oreo/fitai-vscode-extension/releases">
+      <img alt="GitHub Issues or Pull Requests" src="https://img.shields.io/github/issues/x2oreo/fitai-vscode-extension?color=88ff0c&style=flat-square">
+    </a>
+    <a href="https://github.com/x2oreo/fitai-vscode-extension/fork">
+        <img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?color=88ff0c&style=flat-square" alt="Contributions welcome" />
+    </a>
+    <a href="LICENSE">
+        <img src="https://img.shields.io/github/license/x2oreo/fitai-vscode-extension?color=88ff0c&style=flat-square" alt="License" />
+    </a>
+</p>
 
-Welcome to FitAI Pomodoro, a Visual Studio extension designed to bring balance and wellness to your coding routine. We know how easy it is to get lost in code, skipping breaks, straining your eyes, and neglecting movement. That's where we come in! This extension isn’t just a timer—it’s your companion in maintaining a healthier work-life rhythm.
+---
 
-At FitAI, we’re on a mission to help developers build long, healthy, and successful careers. With FitAI Pomodoro, you get a structured way to work efficiently, while making sure your mind and body get the care they deserve.
+## Getting Started
 
-Features
+The FitAI ecosystem consists of three primary components:
 
-Pomodoro Timer Integration: Work in focused intervals with scheduled breaks to boost productivity and prevent mental fatigue.
+- **Mobile Application** *(available at [FitAI](https://github.com/x2oreo/FitAI))*: Offers personalized meal and workout plans tailored to your available time and financial situation. You can also chat with a personal AI health assistant, which is designed specifically for programmers
+- **AI Model API Server** *(available at [FitAI API](https://github.com/x2oreo/fitai-vscode-extension))*: Generates personalized fitness and meal plans based on your profile and preferences, and provides the AI chat assistant.
+- **Visual Studio Code Extension** *(this repository)*: Integrates health guidance directly into your coding workflow.
 
-Smart Break Reminders: Get nudges to stretch, hydrate, and correct your posture—because small habits make a big difference.
+Each component has detailed setup instructions available in their respective repositories.
 
-AI-Powered Wellness Insights: Connect with the FitAI ecosystem for personalized fitness and health tips tailored to your coding routine.
+## Development
 
-Customizable Work Intervals: Adapt the Pomodoro technique to fit your workflow with adjustable session lengths and break times.
+The extension is written in **Typescript**. To build and run it locally, you need to do the following:
 
-Seamless FitAI Ecosystem Integration: Sync with FitAI’s AI-driven coaching to track and improve your health over time.
+1. Configure Node.js 22 LTS on your machine.
+2. Open the project in Visual Studio Code.
+3. Install the nessary packages using `npm install`.
+4. Build the extension via `npm run compile`.
+5. Start a new VSCode instanse via the `Run and Debug` VSCode menu.
+6. **Enjoy! 🎉**
 
-Installation
+## Features
 
-Open Visual Studio and navigate to the Extensions menu.
+- **Pomodoro Timer Integration**<br>
+  Work in focused intervals with scheduled breaks to boost productivity and prevent mental fatigue.
 
-Search for FitAI Pomodoro in the Visual Studio Marketplace.
+- **Smart Break Reminders**
+  Get nudges to stretch, hydrate, and correct your posture—because small habits make a big difference.
 
-Click Install and restart Visual Studio if prompted.
+- **Customizable Work Intervals**<br>
+  Adapt the Pomodoro technique to fit your workflow with adjustable session lengths and break times.
 
-Access the extension from the toolbar and configure your session preferences.
+- **Seamless FitAI Ecosystem Integration**<br>
+  Sync with FitAI’s AI-driven coaching to track and improve your health over time.
 
-Usage
+## Authors
+<table width="100%">
+  <tr>
+    <td align="center">
+        <img width="150px" src="https://github.com/FantomJx.png" alt="Mark Danileychenko" />
+        <p><b>Mark Danileychenko</b><br/><a href="https://github.com/FantomJx/"><img src="https://img.shields.io/badge/GitHub-100000?style=flat-square&logo=github&logoColor=white" /></a></p>
+    </td>
+    <td align="center">
+        <img width="150px" src="https://github.com/Fichoto.png" alt="Filip Mutafis" />
+        <p><b>Filip Mutafis</b><br/><a href="https://github.com/Fichoto/"><img src="https://img.shields.io/badge/GitHub-100000?style=flat-square&logo=github&logoColor=white" /></a></p>
+    </td>
+    <td align="center">
+        <img width="150px" src="https://github.com/kaloyan-gavrilov.png" alt="Kaloyan Gavrilov" />
+        <p><b>Kaloyan Gavrilov</b><br/><a href="https://github.com/kaloyan-gavrilov/"><img src="https://img.shields.io/badge/GitHub-100000?style=flat-square&logo=github&logoColor=white" /></a></p>
+    </td>
+    <td align="center">
+        <img width="150px" src="https://github.com/krister078.png" alt="Kristiyan Kulekov" />
+        <p><b>Kristiyan Kulekov</b><br/><a href="https://github.com/krister078/"><img src="https://img.shields.io/badge/GitHub-100000?style=flat-square&logo=github&logoColor=white" /></a></p>
+    </td>
+  </tr>
+</table>
 
-Start a Pomodoro session directly from the Visual Studio toolbar.
+---
 
-Work in deep focus mode while the timer keeps track of your session.
+## Contribution Guidelines
 
-Follow break reminders for simple but effective health-conscious actions.
+We welcome contributions to the FitAI ecosystem! Follow these steps:
 
-Stay on top of your well-being with FitAI insights and recommendations.
+1. Fork the repository: <https://github.com/x2oreo/FitAI-vscode-extension/fork>
+2. Create a feature branch: `git checkout -b feature/your-feature-name`
+3. Commit your changes: `git commit -m "Add your message here"`
+4. Push to your branch: `git push origin feature/your-feature-name`
+5. Open a Pull Request
 
-Why Use FitAI Pomodoro?
+Your contributions will be reviewed and merged promptly!
 
-Prevents programmer burnout with structured work-break cycles.
+---
 
-Reduces eye strain, RSI, and cognitive fatigue with strategic pauses.
+## License
 
-Encourages a healthier lifestyle without disrupting workflow.
-
-Connects with FitAI for a holistic approach to programmer wellness.
-
-Contributing
-
-We love collaboration! If you have ideas, suggestions, or feature requests, feel free to open an issue or contribute via pull requests.
-
-Code smarter, stay healthier, and make your work sessions count with FitAI Pomodoro!
+FitAI is distributed under the MIT License. See the [LICENSE](LICENSE) file for more details.
