@@ -1,6 +1,6 @@
 <p align="center">
   <img width="256px" src="./docs/logo.png" alt="FitAI Logo" />
-  <h1 align="center">FitAI API</h1>
+  <h1 align="center">FitAI VS Code Extension</h1>
   <p align="center">
     [ <a href="https://github.com/x2oreo/FitAI">FitAI</a> ] · 
     [ <a href="https://github.com/x2oreo/FitAI-vscode-extension">FitAI API</a> ] ·
